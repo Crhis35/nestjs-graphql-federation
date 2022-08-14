@@ -1,0 +1,67 @@
+version: '3'
+
+services:
+  delivery-subgraph:
+    container_name: delivery-subgraph-api
+    build:
+      context: ./apps/delivery-subgraph/
+    ports:
+      - "3002:3002"
+    networks:
+      - app-package-network
+    command: uvicorn main:app --host 0.0.0.0 --port 3002 --reload
+  user-subgraph:
+    container_name: user-subgraph-api
+    volumes:
+      - ./:/usr/src/app
+      - ./node_modules
+    build:
+      context: ./
+      dockerfile: ./apps/user-subgraph/Dockerfile
+      target: development
+    ports:
+      - "3001:3001"
+    networks:
+      - app-package-network
+    command: yarn start:dev user-subgraph
+  order-subgraph:
+    container_name: order-subgraph-api
+    volumes:
+      - ./:/usr/src/app
+      - ./node_modules
+    build:
+      context: ./
+      dockerfile: ./apps/order-subgraph/Dockerfile
+      target: development
+    ports:
+      - "3003:3003"
+    networks:
+      - app-package-network
+    command: yarn start:dev order-subgraph
+    
+  gateway:
+    container_name: gateway-api
+    volumes:
+      - ./:/usr/src/app
+      - ./node_modules
+    build:
+      context: ./
+      dockerfile: ./apps/gateway/Dockerfile
+      target: development
+    command: yarn start:dev
+    ports:
+      - "4000:4000"
+    depends_on:
+      - delivery-subgraph
+      - user-subgraph
+    networks:
+      - app-package-network
+    links:
+      - user-subgraph
+      - delivery-subgraph
+    environment:
+      - SERVICE_LIST=http://delivery-subgraph:3002/graphql,deliveries|http://user-subgraph:3001/graphql,users|http://order-subgraph:3003/graphql,orders|
+
+networks:
+  app-package-network:
+    driver: bridge

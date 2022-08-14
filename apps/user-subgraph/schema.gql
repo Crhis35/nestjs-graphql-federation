@@ -1,0 +1,86 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+directive @key(fields: String!, resolvable: Boolean = true) repeatable on OBJECT | INTERFACE
+
+directive @extends on OBJECT | INTERFACE
+
+directive @external on OBJECT | FIELD_DEFINITION
+
+directive @requires(fields: String!) on FIELD_DEFINITION
+
+directive @provides(fields: String!) on FIELD_DEFINITION
+
+directive @shareable on FIELD_DEFINITION | OBJECT
+
+directive @link(url: String!, import: [link__Import]) on SCHEMA
+
+directive @tag(name: String!) repeatable on FIELD_DEFINITION | OBJECT | INTERFACE | UNION | ARGUMENT_DEFINITION | SCALAR | ENUM | ENUM_VALUE | INPUT_OBJECT | INPUT_FIELD_DEFINITION
+
+directive @inaccessible on FIELD_DEFINITION | OBJECT | INTERFACE | UNION | ARGUMENT_DEFINITION | SCALAR | ENUM | ENUM_VALUE | INPUT_OBJECT | INPUT_FIELD_DEFINITION
+
+directive @override(from: String!) on FIELD_DEFINITION
+
+type Phone {
+  number: Int!
+  countryCode: String!
+  ext: String
+}
+
+type Location {
+  country: String!
+  state: String!
+  addressLine1: String!
+  addressLine2: String
+  city: String!
+  phone: Phone!
+  postalCode: String!
+}
+
+type BankAccount {
+  accountId: String!
+  bankName: String!
+  bankNameId: String!
+}
+
+type Internal {
+  nationalId: String!
+  name: String!
+  lastName: String!
+  id: ID!
+  role: Role!
+  account: BankAccount!
+  location: Location!
+}
+
+enum Role {
+  ADMIN
+  USER
+  DRIVER
+}
+
+type CreditCard {
+  number: Int!
+  expiryMonth: String!
+  expireYear: String!
+  cvv: String!
+  zipCode: String!
+  expiryDate: String!
+}
+
+type Customer {
+  nationalId: String!
+  name: String!
+  lastName: String!
+  id: ID!
+  shipping: [Location!]!
+  creditCard: [CreditCard!]
+}
+
+type Query {
+  getInternal(id: String!): Internal!
+  getCustomer(id: String!): Customer!
+}
+
+scalar link__Import

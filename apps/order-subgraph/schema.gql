@@ -1,0 +1,91 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+directive @key(fields: String!, resolvable: Boolean = true) repeatable on OBJECT | INTERFACE
+
+directive @extends on OBJECT | INTERFACE
+
+directive @external on OBJECT | FIELD_DEFINITION
+
+directive @requires(fields: String!) on FIELD_DEFINITION
+
+directive @provides(fields: String!) on FIELD_DEFINITION
+
+directive @shareable on FIELD_DEFINITION | OBJECT
+
+directive @link(url: String!, import: [link__Import]) on SCHEMA
+
+directive @tag(name: String!) repeatable on FIELD_DEFINITION | OBJECT | INTERFACE | UNION | ARGUMENT_DEFINITION | SCALAR | ENUM | ENUM_VALUE | INPUT_OBJECT | INPUT_FIELD_DEFINITION
+
+directive @inaccessible on FIELD_DEFINITION | OBJECT | INTERFACE | UNION | ARGUMENT_DEFINITION | SCALAR | ENUM | ENUM_VALUE | INPUT_OBJECT | INPUT_FIELD_DEFINITION
+
+directive @override(from: String!) on FIELD_DEFINITION
+
+type Phone {
+  number: Int!
+  countryCode: String!
+  ext: String
+}
+
+type Location {
+  country: String!
+  state: String!
+  addressLine1: String!
+  addressLine2: String
+  city: String!
+  phone: Phone!
+  postalCode: String!
+}
+
+type Invoice {
+  id: ID!
+  orders: [Order!]!
+  status: InvoiceStatus!
+  paymentMethod: PaymentMethodsTypes!
+  tax: Float!
+  price: Float!
+  discount: Float!
+  client: Customer!
+}
+
+enum InvoiceStatus {
+  PROCESSING
+  SENT
+  REJECTED
+  CANCELLED
+}
+
+enum PaymentMethodsTypes {
+  CREDIT
+  DEBIT
+  TRANSFER
+  CASH
+}
+
+type Customer {
+  id: ID!
+  invoices: [Invoice!]!
+}
+
+type Order {
+  id: ID!
+  status: OrderStatus!
+  sender: Customer!
+  receiver: Customer!
+  shipping: Location!
+  price: Float!
+  paid: Boolean!
+}
+
+enum OrderStatus {
+  PENDING
+  PAYMENT_DUE_DATE
+}
+
+type Query {
+  getInvoice(id: String!): Invoice!
+  getOrder(id: String!): Order!
+}
+
+scalar link__Import
