@@ -2,8 +2,6 @@
 
 ![Package Workshop Header](./docs/assets/architecture.png)
 
-Apollo gateway can be used only on nodejs.
-
 Orders subgraph is build on nodejs because is single threaded this allow to handle all requests on a queue to prevents concurrent orders because we have a limit of weight to each vehicle.
 
 ## Configurations
