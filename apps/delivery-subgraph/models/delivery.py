@@ -58,7 +58,7 @@ deliveries = [
 def get_track(root: 'Delivery') -> Optional[Track]:
     for idx, track in enumerate(tracks):
         if root.id == str(idx):
-            return Track(id=root.id, maxWeight=track['maxWeight'], type=track["type"], status=track['status'])
+            return Track(id=root.id, max_weight=track['maxWeight'], type=track["type"], status=track['status'])
     return None
 
 

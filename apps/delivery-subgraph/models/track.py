@@ -38,12 +38,12 @@ tracks = [
 class Track:
     id: strawberry.ID
     status: TrackStatus
-    maxWeight: float
+    max_weight: float  = strawberry.field(name="maxWeight")
     type: TrackType
 
     @classmethod
     def resolve_reference(cls, id: strawberry.ID):
         for track in tracks:
             if track.id == id:
-                return Track(id=id, maxWeight=track['maxWeight'], type=track["type"], status=track['status'])
+                return Track(id=id, max_weight=track['maxWeight'], type=track["type"], status=track['status'])
         return None

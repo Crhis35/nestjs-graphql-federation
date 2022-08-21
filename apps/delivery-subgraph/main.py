@@ -28,7 +28,7 @@ tracks = [
 class Query:
     @strawberry.field
     def list_tracks(self,) -> List[Track]:
-        return [Track(id=track['id'], maxWeight=track['maxWeight'], status=track['status'], type=track['type']) for track in tracks]
+        return [Track(id=track['id'], max_weight=track['maxWeight'], status=track['status'], type=track['type']) for track in tracks]
 
     @strawberry.field
     def list_deliveries(self,) -> List[Delivery]:
